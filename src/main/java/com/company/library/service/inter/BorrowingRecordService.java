@@ -1,12 +1,14 @@
 package com.company.library.service.inter;
 
 import com.company.library.dto.BorrowingRecordDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface BorrowingRecordService {
 
-    List<BorrowingRecordDTO> getAllBorrowingRecords();
+    Page<BorrowingRecordDTO> getAllBorrowingRecords(Pageable pageable);
 
     BorrowingRecordDTO getBorrowingRecordById(Long id);
 

@@ -4,6 +4,8 @@ import com.company.library.dto.CategoryDTO;
 import com.company.library.service.inter.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +20,8 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<CategoryDTO>> getAllCategories() {
-        List<CategoryDTO> categories = categoryService.getAllCategories();
+    public ResponseEntity<Page<CategoryDTO>> getAllCategories(Pageable pageable) {
+        Page<CategoryDTO> categories = categoryService.getAllCategories(pageable);
         return ResponseEntity.ok(categories);
     }
 

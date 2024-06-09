@@ -11,6 +11,8 @@ import com.company.library.repository.PublishingHouseRepository;
 import com.company.library.service.inter.PublishingHouseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,10 +25,9 @@ public class PublishingHouseServiceImpl implements PublishingHouseService {
     private final PublishingHouseRepository publishingHouseRepository;
     private final BookRepository bookRepository;
 
-    public List<PublishingHouseDTO> getAllPublishingHouses() {
-        return publishingHouseRepository.findAll().stream()
-                .map(PublishingHouseMapper.INSTANCE::toDTO)
-                .collect(Collectors.toList());
+    public Page<PublishingHouseDTO> getAllPublishingHouses(Pageable pageable) {
+        Page<PublishingHouse> publishingHouses = publishingHouseRepository.findAll(pageable);
+        return publishingHouses.map(PublishingHouseMapper.INSTANCE::toDTO);
     }
 
     public PublishingHouseDTO getPublishingHouseById(Long id) {

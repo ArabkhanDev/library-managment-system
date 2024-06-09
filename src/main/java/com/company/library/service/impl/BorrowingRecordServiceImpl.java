@@ -9,6 +9,8 @@ import com.company.library.repository.BorrowingRecordRepository;
 import com.company.library.repository.MemberRepository;
 import com.company.library.service.inter.BorrowingRecordService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,10 +25,9 @@ public class BorrowingRecordServiceImpl implements BorrowingRecordService {
     private final MemberRepository memberRepository;
 
     @Override
-    public List<BorrowingRecordDTO> getAllBorrowingRecords() {
-        return borrowingRecordRepository.findAll().stream()
-                .map(BorrowingRecordMapper.INSTANCE::toDTO)
-                .collect(Collectors.toList());
+    public Page<BorrowingRecordDTO> getAllBorrowingRecords(Pageable pageable) {
+        Page<BorrowingRecord> borrowingRecords = borrowingRecordRepository.findAll(pageable);
+        return borrowingRecords.map(BorrowingRecordMapper.INSTANCE::toDTO);
     }
 
     @Override

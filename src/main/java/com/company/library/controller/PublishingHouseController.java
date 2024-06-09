@@ -4,6 +4,8 @@ import com.company.library.dto.PublishingHouseDTO;
 import com.company.library.service.inter.PublishingHouseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +20,8 @@ public class PublishingHouseController {
     private final PublishingHouseService publishingHouseService;
 
     @GetMapping
-    public ResponseEntity<List<PublishingHouseDTO>> getAllPublishingHouses() {
-        List<PublishingHouseDTO> publishingHouses = publishingHouseService.getAllPublishingHouses();
+    public ResponseEntity<Page<PublishingHouseDTO>> getAllPublishingHouses(Pageable pageable) {
+        Page<PublishingHouseDTO> publishingHouses = publishingHouseService.getAllPublishingHouses(pageable);
         return ResponseEntity.ok(publishingHouses);
     }
 

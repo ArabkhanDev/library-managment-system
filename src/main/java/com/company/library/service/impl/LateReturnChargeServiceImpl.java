@@ -9,6 +9,8 @@ import com.company.library.repository.BorrowingRecordRepository;
 import com.company.library.repository.LateReturnChargeRepository;
 import com.company.library.service.inter.LateReturnChargeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,10 +22,9 @@ public class LateReturnChargeServiceImpl implements LateReturnChargeService {
     private final LateReturnChargeRepository lateReturnChargeRepository;
     private final BorrowingRecordRepository borrowingRecordRepository;
 
-    public List<LateReturnChargeDTO> getAllLateReturnCharges() {
-        return lateReturnChargeRepository.findAll().stream()
-                .map(LateReturnChargeMapper.INSTANCE::toDTO)
-                .collect(Collectors.toList());
+    public Page<LateReturnChargeDTO> getAllLateReturnCharges(Pageable pageable) {
+        Page<LateReturnCharge> lateReturnCharges = lateReturnChargeRepository.findAll(pageable);
+        return lateReturnCharges.map(LateReturnChargeMapper.INSTANCE::toDTO);
     }
 
     public LateReturnChargeDTO getLateReturnChargeById(Long id) {

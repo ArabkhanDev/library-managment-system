@@ -8,11 +8,11 @@ import com.company.library.model.Member;
 import com.company.library.repository.MemberRepository;
 import com.company.library.service.inter.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,10 +21,9 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
     @Override
-    public List<MemberDTO> getAllMembers() {
-        return memberRepository.findAll()
-                .stream().map(MemberDTO::new)
-                .collect(Collectors.toList());
+    public Page<MemberDTO> getAllMembers(Pageable pageable) {
+        Page<Member> members = memberRepository.findAll(pageable);
+        return members.map(MemberDTO::new);
     }
 
     @Override

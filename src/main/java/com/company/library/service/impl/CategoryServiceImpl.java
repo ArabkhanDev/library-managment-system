@@ -10,6 +10,8 @@ import com.company.library.service.inter.CategoryService;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
@@ -21,10 +23,9 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public List<CategoryDTO> getAllCategories() {
-        return categoryRepository.findAll().stream()
-                .map(CategoryMapper.INSTANCE::toDTO)
-                .collect(Collectors.toList());
+    public Page<CategoryDTO> getAllCategories(Pageable pageable) {
+        Page<Category> categories = categoryRepository.findAll(pageable);
+        return categories.map(CategoryMapper.INSTANCE::toDTO);
     }
 
     @Override

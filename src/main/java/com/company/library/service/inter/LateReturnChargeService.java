@@ -1,23 +1,25 @@
 package com.company.library.service.inter;
 
 import com.company.library.dto.LateReturnChargeDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface LateReturnChargeService {
 
-    public List<LateReturnChargeDTO> getAllLateReturnCharges();
+    Page<LateReturnChargeDTO> getAllLateReturnCharges(Pageable pageable);
 
-    public LateReturnChargeDTO getLateReturnChargeById(Long id);
+    LateReturnChargeDTO getLateReturnChargeById(Long id);
 
-    public List<LateReturnChargeDTO> getLateReturnChargesByBorrowingRecordId(Long borrowingRecordId);
+    List<LateReturnChargeDTO> getLateReturnChargesByBorrowingRecordId(Long borrowingRecordId);
 
-    public List<LateReturnChargeDTO> getLateReturnChargesByPaymentStatus(boolean isPaid);
+    List<LateReturnChargeDTO> getLateReturnChargesByPaymentStatus(boolean isPaid);
 
-    public LateReturnChargeDTO createLateReturnCharge(LateReturnChargeDTO lateReturnChargeDTO);
+    LateReturnChargeDTO createLateReturnCharge(LateReturnChargeDTO lateReturnChargeDTO);
 
-    public LateReturnChargeDTO updateLateReturnCharge(Long id, LateReturnChargeDTO lateReturnChargeDTO);
+    LateReturnChargeDTO updateLateReturnCharge(Long id, LateReturnChargeDTO lateReturnChargeDTO);
 
-    public void deleteLateReturnCharge(Long id);
+    void deleteLateReturnCharge(Long id);
 
 }

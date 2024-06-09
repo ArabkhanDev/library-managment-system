@@ -7,6 +7,8 @@ import com.company.library.model.Author;
 import com.company.library.repository.AuthorRepository;
 import com.company.library.service.inter.AuthorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,10 +21,9 @@ public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
 
     @Override
-    public List<AuthorDTO> getAllAuthors() {
-        return authorRepository.findAll().stream()
-                .map(AuthorDTO::new)
-                .collect(Collectors.toList());
+    public Page<AuthorDTO> getAllAuthors(Pageable pageable) {
+        Page<Author> authorPage = authorRepository.findAll(pageable);
+        return authorPage.map(AuthorDTO::new);
     }
 
     @Override

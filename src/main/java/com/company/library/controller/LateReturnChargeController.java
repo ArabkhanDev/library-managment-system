@@ -4,6 +4,8 @@ import com.company.library.dto.LateReturnChargeDTO;
 import com.company.library.service.inter.LateReturnChargeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +19,8 @@ public class LateReturnChargeController {
     private final LateReturnChargeService lateReturnChargeService;
 
     @GetMapping
-    public ResponseEntity<List<LateReturnChargeDTO>> getAllLateReturnCharges() {
-        List<LateReturnChargeDTO> charges = lateReturnChargeService.getAllLateReturnCharges();
+    public ResponseEntity<Page<LateReturnChargeDTO>> getAllLateReturnCharges(Pageable pageable) {
+        Page<LateReturnChargeDTO> charges = lateReturnChargeService.getAllLateReturnCharges(pageable);
         return ResponseEntity.ok(charges);
     }
 

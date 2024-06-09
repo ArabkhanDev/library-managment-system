@@ -4,6 +4,8 @@ import com.company.library.dto.BorrowingRecordDTO;
 import com.company.library.service.inter.BorrowingRecordService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +20,8 @@ public class BorrowingRecordController {
     private final BorrowingRecordService borrowingRecordService;
 
     @GetMapping
-    public ResponseEntity<List<BorrowingRecordDTO>> getAllBorrowingRecords() {
-        List<BorrowingRecordDTO> borrowingRecords = borrowingRecordService.getAllBorrowingRecords();
+    public ResponseEntity<Page<BorrowingRecordDTO>> getAllBorrowingRecords(Pageable pageable) {
+        Page<BorrowingRecordDTO> borrowingRecords = borrowingRecordService.getAllBorrowingRecords(pageable);
         return ResponseEntity.ok(borrowingRecords);
     }
 

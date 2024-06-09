@@ -1,5 +1,7 @@
 package com.company.library.service.impl;
 
+import com.company.library.criteria.BookCriteria;
+import com.company.library.criteria.BookSpecification;
 import com.company.library.dto.BookDTO;
 import com.company.library.exception.ResourceNotFoundException;
 import com.company.library.mapper.BookMapper;
@@ -11,8 +13,9 @@ import com.company.library.repository.CategoryRepository;
 import com.company.library.repository.PublishingHouseRepository;
 import com.company.library.service.inter.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,10 +30,9 @@ public class BookServiceImpl implements BookService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public List<BookDTO> getAllBooks() {
-        return bookRepository.findAll().stream()
-                .map(BookMapper.INSTANCE::toDTO)
-                .collect(Collectors.toList());
+    public Page<BookDTO> getAllBooks(Pageable pageable) {
+        Page<Book> books = bookRepository.findAll(pageable);
+        return books.map(BookMapper.INSTANCE::toDTO);
     }
 
     @Override
@@ -38,6 +40,12 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findById(id)
                 .map(BookMapper.INSTANCE::toDTO)
                 .orElseThrow(() -> new ResourceNotFoundException("Book not found with id: " + id));
+    }
+
+    @Override
+    public Page<BookDTO> searchBooks(BookCriteria criteria, Pageable pageable) {
+        Page<Book> books = bookRepository.findAll(BookSpecification.buildCriteria(criteria), pageable);
+        return books.map(BookMapper.INSTANCE::toDTO);
     }
 
     @Override
@@ -58,7 +66,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-//    @Transactional
     public void deleteBook(Long id) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Book not found with id: " + id));
