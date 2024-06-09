@@ -1,7 +1,7 @@
 package com.company.library.service.impl;
 
 import com.company.library.dto.AuthorDTO;
-import com.company.library.exception.ResourceNotFoundException;
+import com.company.library.exception.types.ResourceNotFoundException;
 import com.company.library.mapper.AuthorMapper;
 import com.company.library.model.Author;
 import com.company.library.repository.AuthorRepository;
@@ -10,9 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

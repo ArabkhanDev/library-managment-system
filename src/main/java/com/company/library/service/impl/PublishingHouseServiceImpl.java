@@ -1,9 +1,9 @@
 package com.company.library.service.impl;
 
 import com.company.library.dto.PublishingHouseDTO;
-import com.company.library.exception.DuplicateResourceException;
-import com.company.library.exception.ResourceInUseException;
-import com.company.library.exception.ResourceNotFoundException;
+import com.company.library.exception.types.DuplicateResourceException;
+import com.company.library.exception.types.ResourceInUseException;
+import com.company.library.exception.types.ResourceNotFoundException;
 import com.company.library.mapper.PublishingHouseMapper;
 import com.company.library.model.PublishingHouse;
 import com.company.library.repository.BookRepository;

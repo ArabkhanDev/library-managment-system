@@ -1,6 +1,7 @@
 package com.company.library.controller;
 
 import com.company.library.dto.LateReturnChargeDTO;
+import com.company.library.model.base.BaseResponse;
 import com.company.library.service.inter.LateReturnChargeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,44 +20,44 @@ public class LateReturnChargeController {
     private final LateReturnChargeService lateReturnChargeService;
 
     @GetMapping
-    public ResponseEntity<Page<LateReturnChargeDTO>> getAllLateReturnCharges(Pageable pageable) {
+    public BaseResponse<Page<LateReturnChargeDTO>> getAllLateReturnCharges(Pageable pageable) {
         Page<LateReturnChargeDTO> charges = lateReturnChargeService.getAllLateReturnCharges(pageable);
-        return ResponseEntity.ok(charges);
+        return BaseResponse.success(charges);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LateReturnChargeDTO> getLateReturnChargeById(@PathVariable Long id) {
+    public BaseResponse<LateReturnChargeDTO> getLateReturnChargeById(@PathVariable Long id) {
         LateReturnChargeDTO charge = lateReturnChargeService.getLateReturnChargeById(id);
-        return ResponseEntity.ok(charge);
+        return BaseResponse.success(charge);
     }
 
     @GetMapping("/by-borrowing-record/{borrowingRecordId}")
-    public ResponseEntity<List<LateReturnChargeDTO>> getLateReturnChargesByBorrowingRecordId(@PathVariable Long borrowingRecordId) {
+    public BaseResponse<List<LateReturnChargeDTO>> getLateReturnChargesByBorrowingRecordId(@PathVariable Long borrowingRecordId) {
         List<LateReturnChargeDTO> charges = lateReturnChargeService.getLateReturnChargesByBorrowingRecordId(borrowingRecordId);
-        return ResponseEntity.ok(charges);
+        return BaseResponse.success(charges);
     }
 
     @GetMapping("/by-payment-status")
-    public ResponseEntity<List<LateReturnChargeDTO>> getLateReturnChargesByPaymentStatus(@RequestParam boolean isPaid) {
+    public BaseResponse<List<LateReturnChargeDTO>> getLateReturnChargesByPaymentStatus(@RequestParam boolean isPaid) {
         List<LateReturnChargeDTO> charges = lateReturnChargeService.getLateReturnChargesByPaymentStatus(isPaid);
-        return ResponseEntity.ok(charges);
+        return BaseResponse.success(charges);
     }
 
     @PostMapping
-    public ResponseEntity<LateReturnChargeDTO> createLateReturnCharge(@Valid @RequestBody LateReturnChargeDTO lateReturnChargeDTO) {
+    public BaseResponse<LateReturnChargeDTO> createLateReturnCharge(@Valid @RequestBody LateReturnChargeDTO lateReturnChargeDTO) {
         LateReturnChargeDTO createdCharge = lateReturnChargeService.createLateReturnCharge(lateReturnChargeDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdCharge);
+        return BaseResponse.created(createdCharge);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LateReturnChargeDTO> updateLateReturnCharge(@PathVariable Long id,@Valid @RequestBody LateReturnChargeDTO lateReturnChargeDTO) {
+    public BaseResponse<LateReturnChargeDTO> updateLateReturnCharge(@PathVariable Long id,@Valid @RequestBody LateReturnChargeDTO lateReturnChargeDTO) {
         LateReturnChargeDTO updatedCharge = lateReturnChargeService.updateLateReturnCharge(id, lateReturnChargeDTO);
-        return ResponseEntity.ok(updatedCharge);
+        return BaseResponse.success(updatedCharge);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLateReturnCharge(@PathVariable Long id) {
+    public BaseResponse<Void> deleteLateReturnCharge(@PathVariable Long id) {
         lateReturnChargeService.deleteLateReturnCharge(id);
-        return ResponseEntity.noContent().build();
+        return BaseResponse.notContent();
     }
 }

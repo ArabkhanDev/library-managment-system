@@ -1,6 +1,7 @@
 package com.company.library.controller;
 
 import com.company.library.dto.PublishingHouseDTO;
+import com.company.library.model.base.BaseResponse;
 import com.company.library.service.inter.PublishingHouseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,38 +21,38 @@ public class PublishingHouseController {
     private final PublishingHouseService publishingHouseService;
 
     @GetMapping
-    public ResponseEntity<Page<PublishingHouseDTO>> getAllPublishingHouses(Pageable pageable) {
+    public BaseResponse<Page<PublishingHouseDTO>> getAllPublishingHouses(Pageable pageable) {
         Page<PublishingHouseDTO> publishingHouses = publishingHouseService.getAllPublishingHouses(pageable);
-        return ResponseEntity.ok(publishingHouses);
+        return BaseResponse.success(publishingHouses);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PublishingHouseDTO> getPublishingHouseById(@PathVariable Long id) {
+    public BaseResponse<PublishingHouseDTO> getPublishingHouseById(@PathVariable Long id) {
         PublishingHouseDTO publishingHouse = publishingHouseService.getPublishingHouseById(id);
-        return ResponseEntity.ok(publishingHouse);
+        return BaseResponse.success(publishingHouse);
     }
 
     @GetMapping("/by-country")
-    public ResponseEntity<List<PublishingHouseDTO>> getPublishingHousesByCountry(@RequestParam String country) {
+    public BaseResponse<List<PublishingHouseDTO>> getPublishingHousesByCountry(@RequestParam String country) {
         List<PublishingHouseDTO> publishingHouses = publishingHouseService.getPublishingHousesByCountry(country);
-        return ResponseEntity.ok(publishingHouses);
+        return BaseResponse.success(publishingHouses);
     }
 
     @PostMapping
-    public ResponseEntity<PublishingHouseDTO> createPublishingHouse(@Valid @RequestBody PublishingHouseDTO publishingHouseDTO) {
+    public BaseResponse<PublishingHouseDTO> createPublishingHouse(@Valid @RequestBody PublishingHouseDTO publishingHouseDTO) {
         PublishingHouseDTO createdPublishingHouse = publishingHouseService.createPublishingHouse(publishingHouseDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdPublishingHouse);
+        return BaseResponse.created(createdPublishingHouse);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PublishingHouseDTO> updatePublishingHouse(@PathVariable Long id, @Valid @RequestBody PublishingHouseDTO publishingHouseDTO) {
+    public BaseResponse<PublishingHouseDTO> updatePublishingHouse(@PathVariable Long id, @Valid @RequestBody PublishingHouseDTO publishingHouseDTO) {
         PublishingHouseDTO updatedPublishingHouse = publishingHouseService.updatePublishingHouse(id, publishingHouseDTO);
-        return ResponseEntity.ok(updatedPublishingHouse);
+        return BaseResponse.success(updatedPublishingHouse);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePublishingHouse(@PathVariable Long id) {
+    public BaseResponse<Void> deletePublishingHouse(@PathVariable Long id) {
         publishingHouseService.deletePublishingHouse(id);
-        return ResponseEntity.noContent().build();
+        return BaseResponse.notContent();
     }
 }

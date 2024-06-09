@@ -1,7 +1,7 @@
 package com.company.library.service.impl;
 
 import com.company.library.dto.LateReturnChargeDTO;
-import com.company.library.exception.ResourceNotFoundException;
+import com.company.library.exception.types.ResourceNotFoundException;
 import com.company.library.mapper.LateReturnChargeMapper;
 import com.company.library.model.BorrowingRecord;
 import com.company.library.model.LateReturnCharge;

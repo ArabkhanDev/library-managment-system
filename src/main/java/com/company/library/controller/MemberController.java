@@ -1,6 +1,7 @@
 package com.company.library.controller;
 
 import com.company.library.dto.MemberDTO;
+import com.company.library.model.base.BaseResponse;
 import com.company.library.service.inter.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,33 +19,33 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping
-    public ResponseEntity<Page<MemberDTO>> getAllMembers(Pageable pageable) {
+    public BaseResponse<Page<MemberDTO>> getAllMembers(Pageable pageable) {
         Page<MemberDTO> members = memberService.getAllMembers(pageable);
-        return ResponseEntity.ok(members);
+        return BaseResponse.success(members);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MemberDTO> getMemberById(@PathVariable Long id) {
+    public BaseResponse<MemberDTO> getMemberById(@PathVariable Long id) {
         MemberDTO member = memberService.getMemberById(id);
-        return ResponseEntity.ok(member);
+        return BaseResponse.success(member);
     }
 
     @PostMapping
-    public ResponseEntity<MemberDTO> createMember(@Valid @RequestBody MemberDTO memberDTO) {
+    public BaseResponse<MemberDTO> createMember(@Valid @RequestBody MemberDTO memberDTO) {
         MemberDTO createdMember = memberService.createMember(memberDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdMember);
+        return BaseResponse.created(createdMember);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MemberDTO> updateMember(@PathVariable Long id, @Valid @RequestBody MemberDTO memberDTO) {
+    public BaseResponse<MemberDTO> updateMember(@PathVariable Long id, @Valid @RequestBody MemberDTO memberDTO) {
         MemberDTO updatedMember = memberService.updateMember(id, memberDTO);
-        return ResponseEntity.ok(updatedMember);
+        return BaseResponse.success(updatedMember);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMember(@PathVariable Long id) {
+    public BaseResponse<Void> deleteMember(@PathVariable Long id) {
         memberService.deleteMember(id);
-        return ResponseEntity.noContent().build();
+        return BaseResponse.notContent();
     }
 
 }

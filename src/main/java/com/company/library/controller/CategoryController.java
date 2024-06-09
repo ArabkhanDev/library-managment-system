@@ -1,6 +1,7 @@
 package com.company.library.controller;
 
 import com.company.library.dto.CategoryDTO;
+import com.company.library.model.base.BaseResponse;
 import com.company.library.service.inter.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,44 +21,44 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<Page<CategoryDTO>> getAllCategories(Pageable pageable) {
+    public BaseResponse<Page<CategoryDTO>> getAllCategories(Pageable pageable) {
         Page<CategoryDTO> categories = categoryService.getAllCategories(pageable);
-        return ResponseEntity.ok(categories);
+        return BaseResponse.success(categories);
     }
 
     @GetMapping("/top-level")
-    public ResponseEntity<List<CategoryDTO>> getTopLevelCategories() {
+    public BaseResponse<List<CategoryDTO>> getTopLevelCategories() {
         List<CategoryDTO> categories = categoryService.getTopLevelCategories();
-        return ResponseEntity.ok(categories);
+        return BaseResponse.success(categories);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable Long id) {
+    public BaseResponse<CategoryDTO> getCategoryById(@PathVariable Long id) {
         CategoryDTO category = categoryService.getCategoryById(id);
-        return ResponseEntity.ok(category);
+        return BaseResponse.success(category);
     }
 
     @GetMapping("/{id}/subcategories")
-    public ResponseEntity<List<CategoryDTO>> getSubcategoriesByCategoryId(@PathVariable Long id) {
+    public BaseResponse<List<CategoryDTO>> getSubcategoriesByCategoryId(@PathVariable Long id) {
         List<CategoryDTO> subcategories = categoryService.getSubcategoriesByCategoryId(id);
-        return ResponseEntity.ok(subcategories);
+        return BaseResponse.success(subcategories);
     }
 
     @PostMapping
-    public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
+    public BaseResponse<CategoryDTO> createCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
         CategoryDTO createdCategory = categoryService.createCategory(categoryDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdCategory);
+        return BaseResponse.created(createdCategory);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Long id, @Valid @RequestBody CategoryDTO categoryDTO) {
+    public BaseResponse<CategoryDTO> updateCategory(@PathVariable Long id, @Valid @RequestBody CategoryDTO categoryDTO) {
         CategoryDTO updatedCategory = categoryService.updateCategory(id, categoryDTO);
-        return ResponseEntity.ok(updatedCategory);
+        return BaseResponse.success(updatedCategory);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+    public BaseResponse<Void> deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
-        return ResponseEntity.noContent().build();
+        return BaseResponse.notContent();
     }
 }

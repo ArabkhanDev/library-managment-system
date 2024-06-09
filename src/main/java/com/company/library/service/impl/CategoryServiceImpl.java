@@ -1,7 +1,7 @@
 package com.company.library.service.impl;
 
 import com.company.library.dto.CategoryDTO;
-import com.company.library.exception.ResourceNotFoundException;
+import com.company.library.exception.types.ResourceNotFoundException;
 import com.company.library.mapper.CategoryMapper;
 import com.company.library.model.Category;
 import com.company.library.repository.CategoryRepository;

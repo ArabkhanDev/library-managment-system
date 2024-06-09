@@ -53,11 +53,11 @@ public class Book extends BaseEntity {
     @Column(name = "shelf_location")
     private String shelfLocation;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "publishing_house_id")
     private PublishingHouse publishingHouse;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "book_authors",
             joinColumns = @JoinColumn(name = "book_id"),

@@ -42,7 +42,6 @@ public class PublishingHouse extends BaseEntity {
     @Column(name = "website")
     private String website;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "foundation_year")
     private Integer foundationYear;
 

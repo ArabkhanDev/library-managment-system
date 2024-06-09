@@ -1,4 +1,4 @@
-package com.company.library.exception.global;
+package com.company.library.exception;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

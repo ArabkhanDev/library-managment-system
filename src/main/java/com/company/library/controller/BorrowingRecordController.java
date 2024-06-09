@@ -1,6 +1,7 @@
 package com.company.library.controller;
 
 import com.company.library.dto.BorrowingRecordDTO;
+import com.company.library.model.base.BaseResponse;
 import com.company.library.service.inter.BorrowingRecordService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,44 +21,44 @@ public class BorrowingRecordController {
     private final BorrowingRecordService borrowingRecordService;
 
     @GetMapping
-    public ResponseEntity<Page<BorrowingRecordDTO>> getAllBorrowingRecords(Pageable pageable) {
+    public BaseResponse<Page<BorrowingRecordDTO>> getAllBorrowingRecords(Pageable pageable) {
         Page<BorrowingRecordDTO> borrowingRecords = borrowingRecordService.getAllBorrowingRecords(pageable);
-        return ResponseEntity.ok(borrowingRecords);
+        return BaseResponse.success(borrowingRecords);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BorrowingRecordDTO> getBorrowingRecordById(@PathVariable Long id) {
+    public BaseResponse<BorrowingRecordDTO> getBorrowingRecordById(@PathVariable Long id) {
         BorrowingRecordDTO borrowingRecord = borrowingRecordService.getBorrowingRecordById(id);
-        return ResponseEntity.ok(borrowingRecord);
+        return BaseResponse.success(borrowingRecord);
     }
 
     @GetMapping("/by-member/{memberId}")
-    public ResponseEntity<List<BorrowingRecordDTO>> getBorrowingRecordsByMemberId(@PathVariable Long memberId) {
+    public BaseResponse<List<BorrowingRecordDTO>> getBorrowingRecordsByMemberId(@PathVariable Long memberId) {
         List<BorrowingRecordDTO> borrowingRecords = borrowingRecordService.getBorrowingRecordsByMemberId(memberId);
-        return ResponseEntity.ok(borrowingRecords);
+        return BaseResponse.success(borrowingRecords);
     }
 
     @GetMapping("/by-book/{bookId}")
-    public ResponseEntity<List<BorrowingRecordDTO>> getBorrowingRecordsByBookId(@PathVariable Long bookId) {
+    public BaseResponse<List<BorrowingRecordDTO>> getBorrowingRecordsByBookId(@PathVariable Long bookId) {
         List<BorrowingRecordDTO> borrowingRecords = borrowingRecordService.getBorrowingRecordsByBookId(bookId);
-        return ResponseEntity.ok(borrowingRecords);
+        return BaseResponse.success(borrowingRecords);
     }
 
     @PostMapping
-    public ResponseEntity<BorrowingRecordDTO> createBorrowingRecord(@Valid @RequestBody BorrowingRecordDTO borrowingRecordDTO) {
+    public BaseResponse<BorrowingRecordDTO> createBorrowingRecord(@Valid @RequestBody BorrowingRecordDTO borrowingRecordDTO) {
         BorrowingRecordDTO createdBorrowingRecord = borrowingRecordService.createBorrowingRecord(borrowingRecordDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdBorrowingRecord);
+        return BaseResponse.created(createdBorrowingRecord);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BorrowingRecordDTO> updateBorrowingRecord(@PathVariable Long id, @Valid @RequestBody BorrowingRecordDTO borrowingRecordDTO) {
+    public BaseResponse<BorrowingRecordDTO> updateBorrowingRecord(@PathVariable Long id, @Valid @RequestBody BorrowingRecordDTO borrowingRecordDTO) {
         BorrowingRecordDTO updatedBorrowingRecord = borrowingRecordService.updateBorrowingRecord(id, borrowingRecordDTO);
-        return ResponseEntity.ok(updatedBorrowingRecord);
+        return BaseResponse.success(updatedBorrowingRecord);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBorrowingRecord(@PathVariable Long id) {
+    public BaseResponse<Void> deleteBorrowingRecord(@PathVariable Long id) {
         borrowingRecordService.deleteBorrowingRecord(id);
-        return ResponseEntity.noContent().build();
+        return BaseResponse.notContent();
     }
 }
