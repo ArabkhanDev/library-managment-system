@@ -1,6 +1,7 @@
 package com.company.library.model;
 
 import com.company.library.enums.MembershipType;
+import com.company.library.model.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +18,7 @@ import java.util.List;
 @Table(name = "members")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

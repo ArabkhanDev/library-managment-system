@@ -1,5 +1,6 @@
 package com.company.library.model;
 
+import com.company.library.model.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import java.time.LocalDate;
 @Table(name = "publishing_houses")
 @AllArgsConstructor
 @NoArgsConstructor
-public class PublishingHouse {
+public class PublishingHouse extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
