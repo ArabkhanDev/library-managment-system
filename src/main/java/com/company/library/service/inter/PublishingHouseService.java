@@ -1,6 +1,6 @@
 package com.company.library.service.inter;
 
-import com.company.library.dto.PublishingHouseDTO;
+import com.company.library.dto.common.PublishingHouseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

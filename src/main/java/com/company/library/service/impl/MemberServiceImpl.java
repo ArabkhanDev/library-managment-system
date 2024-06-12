@@ -1,6 +1,6 @@
 package com.company.library.service.impl;
 
-import com.company.library.dto.MemberDTO;
+import com.company.library.dto.common.MemberDTO;
 import com.company.library.enums.MembershipType;
 import com.company.library.exception.types.ResourceNotFoundException;
 import com.company.library.mapper.MemberMapper;

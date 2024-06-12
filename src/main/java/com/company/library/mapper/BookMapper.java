@@ -1,6 +1,6 @@
 package com.company.library.mapper;
 
-import com.company.library.dto.BookDTO;
+import com.company.library.dto.common.BookDTO;
 import com.company.library.model.Author;
 import com.company.library.model.Book;
 import com.company.library.model.Category;

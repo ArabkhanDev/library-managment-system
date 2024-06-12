@@ -1,6 +1,6 @@
 package com.company.library.service.inter;
 
-import com.company.library.dto.LateReturnChargeDTO;
+import com.company.library.dto.common.LateReturnChargeDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

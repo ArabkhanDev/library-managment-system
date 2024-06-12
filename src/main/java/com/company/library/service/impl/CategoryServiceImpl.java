@@ -1,6 +1,6 @@
 package com.company.library.service.impl;
 
-import com.company.library.dto.CategoryDTO;
+import com.company.library.dto.common.CategoryDTO;
 import com.company.library.exception.types.ResourceNotFoundException;
 import com.company.library.mapper.CategoryMapper;
 import com.company.library.model.Category;
@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,11 +53,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
         Category category = CategoryMapper.INSTANCE.toEntity(categoryDTO);
-        if (categoryDTO.getParentCategoryId() != null) {
-            Category parentCategory = categoryRepository.findById(categoryDTO.getParentCategoryId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Parent category not found with id: " + categoryDTO.getParentCategoryId()));
-            category.setParentCategory(parentCategory);
-        }
+
+        Optional.ofNullable(categoryDTO.getParentCategoryId())
+                .ifPresent(parentCategoryId -> {
+                    Category parentCategory = categoryRepository.findById(parentCategoryId)
+                            .orElseThrow(() -> new ResourceNotFoundException("Parent category not found with id: " + parentCategoryId));
+                    category.setParentCategory(parentCategory);
+                });
+
         Category savedCategory = categoryRepository.save(category);
         return CategoryMapper.INSTANCE.toDTO(savedCategory);
     }
@@ -69,13 +73,10 @@ public class CategoryServiceImpl implements CategoryService {
         existingCategory.setName(categoryDTO.getName());
         existingCategory.setDescription(categoryDTO.getDescription());
 
-        if (categoryDTO.getParentCategoryId() != null) {
-            Category parentCategory = categoryRepository.findById(categoryDTO.getParentCategoryId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Parent category not found with id: " + categoryDTO.getParentCategoryId()));
-            existingCategory.setParentCategory(parentCategory);
-        } else {
-            existingCategory.setParentCategory(null);
-        }
+        Optional.ofNullable(categoryDTO.getParentCategoryId())
+                .flatMap(categoryRepository::findById)
+                .ifPresentOrElse(existingCategory::setParentCategory,
+                        () -> existingCategory.setParentCategory(null));
 
         Category updatedCategory = categoryRepository.save(existingCategory);
         return CategoryMapper.INSTANCE.toDTO(updatedCategory);

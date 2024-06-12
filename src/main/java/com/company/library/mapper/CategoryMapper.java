@@ -1,6 +1,6 @@
 package com.company.library.mapper;
 
-import com.company.library.dto.CategoryDTO;
+import com.company.library.dto.common.CategoryDTO;
 import com.company.library.model.Category;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

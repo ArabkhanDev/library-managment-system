@@ -1,4 +1,4 @@
-package com.company.library.dto;
+package com.company.library.dto.common;
 
 import com.company.library.model.Member;
 import jakarta.validation.constraints.*;

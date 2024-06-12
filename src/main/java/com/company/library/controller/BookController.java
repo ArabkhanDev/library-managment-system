@@ -1,7 +1,7 @@
 package com.company.library.controller;
 
 import com.company.library.criteria.BookCriteria;
-import com.company.library.dto.BookDTO;
+import com.company.library.dto.common.BookDTO;
 import com.company.library.model.base.BaseResponse;
 import com.company.library.service.inter.BookService;
 import jakarta.validation.Valid;

@@ -1,6 +1,6 @@
 package com.company.library.mapper;
 
-import com.company.library.dto.LateReturnChargeDTO;
+import com.company.library.dto.common.LateReturnChargeDTO;
 import com.company.library.model.LateReturnCharge;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

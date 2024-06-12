@@ -1,6 +1,6 @@
 package com.company.library.service.inter;
 
-import com.company.library.dto.BorrowingRecordDTO;
+import com.company.library.dto.common.BorrowingRecordDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

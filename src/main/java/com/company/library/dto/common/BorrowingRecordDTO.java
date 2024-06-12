@@ -1,4 +1,4 @@
-package com.company.library.dto;
+package com.company.library.dto.common;
 
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;

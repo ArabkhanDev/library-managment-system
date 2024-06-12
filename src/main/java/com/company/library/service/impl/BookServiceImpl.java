@@ -2,7 +2,7 @@ package com.company.library.service.impl;
 
 import com.company.library.criteria.BookCriteria;
 import com.company.library.criteria.BookSpecification;
-import com.company.library.dto.BookDTO;
+import com.company.library.dto.common.BookDTO;
 import com.company.library.exception.types.ResourceNotFoundException;
 import com.company.library.mapper.BookMapper;
 import com.company.library.model.Book;

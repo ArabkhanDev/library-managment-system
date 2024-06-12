@@ -1,6 +1,6 @@
 package com.company.library.mapper;
 
-import com.company.library.dto.AuthorDTO;
+import com.company.library.dto.common.AuthorDTO;
 import com.company.library.model.Author;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

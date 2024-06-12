@@ -1,6 +1,6 @@
 package com.company.library.mapper;
 
-import com.company.library.dto.BorrowingRecordDTO;
+import com.company.library.dto.common.BorrowingRecordDTO;
 import com.company.library.model.BorrowingRecord;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

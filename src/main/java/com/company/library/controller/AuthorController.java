@@ -1,6 +1,6 @@
 package com.company.library.controller;
 
-import com.company.library.dto.AuthorDTO;
+import com.company.library.dto.common.AuthorDTO;
 import com.company.library.model.base.BaseResponse;
 import com.company.library.service.inter.AuthorService;
 import jakarta.validation.Valid;

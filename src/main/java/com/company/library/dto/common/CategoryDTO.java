@@ -1,4 +1,4 @@
-package com.company.library.dto;
+package com.company.library.dto.common;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

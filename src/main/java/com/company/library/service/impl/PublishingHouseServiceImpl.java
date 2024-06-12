@@ -1,6 +1,6 @@
 package com.company.library.service.impl;
 
-import com.company.library.dto.PublishingHouseDTO;
+import com.company.library.dto.common.PublishingHouseDTO;
 import com.company.library.exception.types.DuplicateResourceException;
 import com.company.library.exception.types.ResourceInUseException;
 import com.company.library.exception.types.ResourceNotFoundException;

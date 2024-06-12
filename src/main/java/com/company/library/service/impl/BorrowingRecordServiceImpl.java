@@ -1,6 +1,6 @@
 package com.company.library.service.impl;
 
-import com.company.library.dto.BorrowingRecordDTO;
+import com.company.library.dto.common.BorrowingRecordDTO;
 import com.company.library.exception.types.ResourceNotFoundException;
 import com.company.library.mapper.BorrowingRecordMapper;
 import com.company.library.model.BorrowingRecord;
