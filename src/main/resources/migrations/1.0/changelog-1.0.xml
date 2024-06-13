@@ -1,0 +1,17 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <include file="migrations/1.0/1.0.0-user-table.xml"/>
+    <include file="migrations/1.0/1.0.1-author-table.xml"/>
+    <include file="migrations/1.0/1.0.2-publishing-house-table.xml"/>
+    <include file="migrations/1.0/1.0.3-category-table.xml"/>
+    <include file="migrations/1.0/1.0.4-book-table.xml"/>
+    <include file="migrations/1.0/1.0.5-member-table.xml"/>
+    <include file="migrations/1.0/1.0.6-borrowing-record-table.xml"/>
+    <include file="migrations/1.0/1.0.7-late-return-change-table.xml"/>
+    <include file="migrations/1.0/1.0.8-insert-values.xml"/>
+
+</databaseChangeLog>

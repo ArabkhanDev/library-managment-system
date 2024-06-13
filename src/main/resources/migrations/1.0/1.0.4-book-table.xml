@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet id="book-table" author="arabkhan">
+        <createTable tableName="books">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subtitle" type="VARCHAR(255)"/>
+            <column name="isbn" type="VARCHAR(20)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="publication_year" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="edition" type="VARCHAR(50)"/>
+            <column name="pages" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="language" type="VARCHAR(50)"/>
+            <column name="copies" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="available_copies" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="shelf_location" type="VARCHAR(100)"/>
+            <column name="publishing_house_id" type="BIGINT"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="books"
+                                 baseColumnNames="publishing_house_id"
+                                 referencedTableName="publishing_houses"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_books_publishing_house"/>
+
+        <createTable tableName="book_authors">
+            <column name="book_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="book_authors"
+                                 baseColumnNames="book_id"
+                                 referencedTableName="books"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_book_authors_books"/>
+
+        <addForeignKeyConstraint baseTableName="book_authors"
+                                 baseColumnNames="author_id"
+                                 referencedTableName="authors"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_book_authors_authors"/>
+
+        <createTable tableName="book_categories">
+            <column name="book_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="book_categories"
+                                 baseColumnNames="book_id"
+                                 referencedTableName="books"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_book_categories_books"/>
+
+        <addForeignKeyConstraint baseTableName="book_categories"
+                                 baseColumnNames="category_id"
+                                 referencedTableName="categories"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_book_categories_categories"/>
+    </changeSet>
+</databaseChangeLog>

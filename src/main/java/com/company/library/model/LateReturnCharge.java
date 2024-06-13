@@ -18,14 +18,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LateReturnCharge extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Column(name = "amount")
+    @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
-    @Column(name = "due_date")
+    @Column(name = "due_date", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
 
@@ -33,11 +30,11 @@ public class LateReturnCharge extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate paymentDate;
 
-    @Column(name = "is_paid")
+    @Column(name = "is_paid", nullable = false)
     private boolean isPaid;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "borrowing_record_id")
+    @JoinColumn(name = "borrowing_record_id", nullable = false, unique = true)
     private BorrowingRecord borrowingRecord;
 
 }

@@ -1,6 +1,7 @@
 package com.company.library.model.user;
 
 import com.company.library.enums.Role;
+import com.company.library.model.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,19 +19,23 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
-public class User implements UserDetails {
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+public class User extends BaseEntity implements UserDetails {
 
-    @Id
-    @GeneratedValue
-    private Integer id;
+    @Column(nullable = false)
     private String firstname;
+
+    @Column(nullable = false)
     private String lastname;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String password;
+
     @Enumerated(EnumType.STRING)
     private Role role;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -1,15 +1,42 @@
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/library-management
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: root
+server:
+  port: 8080
 
+spring:
+
+  liquibase:
+    enabled: true
+    change-log: classpath:migrations/changelog-master.xml
+
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://${DB_CONNECTION_IP:localhost}:${DB_CONNECTION_PORT:3306}/library-management?allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8
+    username: &username ${DB_CONNECTION_USERNAME:root}
+    password: &password ${DB_CONNECTION_PASSWORD:password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    testWhileIdle: true
+    validationQuery: "SELECT 1"
+    timeBetweenEvictionRunsMillis: 60000
+    testOnBorrow: true
+    validationInterval: 10000
+    logValidationErrors: true
+    hikari:
+      leakDetectionThreshold: 30000
+      validationTimeout: 300000
+      removeAbandoned: true
+      removeAbandonedTimeout: 60
+      connectionTimeout: 30000
+      idleTimeout: 600000
+      maxLifetime: 1800000
   jpa:
-    hibernate:
-      ddl-auto: update
-    generate-ddl: true
     properties:
       hibernate:
+        temp:
+          useJdbcMetadataDefaults: "false"
         dialect: org.hibernate.dialect.MySQLDialect
-    show-sql: true
+        connection:
+          providerDisablesAutocommit: false
+    showSql: false
+    generateDdl: false
+    openInView: false
+    hibernate:
+      ddlAuto: validate

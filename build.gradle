@@ -1,18 +1,25 @@
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.3.0'
 	id 'io.spring.dependency-management' version '1.1.5'
+	id 'com.bmuschko.docker-remote-api' version "$dockerVersion" apply true
 }
 
 group = 'com.company'
-version = '0.0.1-SNAPSHOT'
+version = '1.0'
+
+def ref = 'git rev-parse --short HEAD'.execute().text.trim();
+version = "$projectVersion.$ref"
 
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(17)
 	}
 }
-
 
 configurations {
 	compileOnly {
@@ -34,6 +41,8 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+	implementation group: 'org.liquibase', name: 'liquibase-core', version: '4.28.0'
+
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
@@ -48,6 +57,57 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+task dockerFile(type: Dockerfile, dependsOn: assemble) {
+	destFile.set(project.file('Dockerfile'))
+	from "alpine:$alpineVersion"
+	runCommand 'apk add --no-cache openjdk17'
+	runCommand 'apk add --no-cache tzdata'
+	copyFile "build/libs/${project.name}-${project.version}.jar", '/app/'
+	workingDir '/app/'
+	entryPoint 'java'
+	defaultCommand '-jar', "/app/${project.name}-${project.version}.jar"
+}
+
+task createDockerBuildDir {
+	doLast {
+		file('build/docker').mkdirs()
+	}
+}
+
+task dockerBuild(type: DockerBuildImage, dependsOn: [dockerFile, createDockerBuildDir]) {
+	inputDir.set(file('build/docker'))
+	images.add("$dockerRepoUrl/${project.name}:$version")
+}
+
+task dockerPush(type: DockerPushImage, dependsOn: dockerBuild) {
+	images.add("$dockerRepoUrl/${project.name}:$version")
+
+	registryCredentials {
+		username = "$dockerHubUsername"
+		password = "$dockerHubPassword"
+		email = "$dockerHubEmail"
+	}
+}
+
+task deploy {
+	def dockerImageTag = version
+	def findDockerComposePath = new File(rootDir, 'docker-compose.yaml')
+
+	def dockerComposeFile = file(findDockerComposePath)
+	def dockerComposeContent = dockerComposeFile.text
+
+	def updatedDockerComposeContent = dockerComposeContent
+			.replaceAll(/${project.name}:\n\s+image: \S+/, "${project.name}:\n    " +
+					"image: ${dockerHubUsername}/${project.name}:${dockerImageTag}")
+
+	dockerComposeFile.write(updatedDockerComposeContent)
+
+	println "Docker image tag '${dockerImageTag}' changed."
+}
+
+task runDockerCompose(type: Exec, dependsOn: dockerPush) {
+	commandLine 'docker-compose', 'up', '-d'
+}
 
 tasks.named('test') {
 	useJUnitPlatform()

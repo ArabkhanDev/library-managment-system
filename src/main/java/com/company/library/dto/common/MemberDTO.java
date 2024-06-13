@@ -28,7 +28,7 @@ public class MemberDTO {
     private String email;
 
     @NotBlank(message = "Phone number cannot be blank")
-    @Pattern(regexp = "^050\\d{7}$", message = "Phone number must be in the format 0505555555")
+    @Pattern(regexp = "^(050|070|055)\\d{7}$", message = "Phone number must be in the format 0505555555, 0705555555 or 0555555555")
     private String phoneNumber;
 
     @NotBlank(message = "Address cannot be blank")

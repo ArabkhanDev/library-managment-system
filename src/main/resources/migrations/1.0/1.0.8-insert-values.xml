@@ -1,0 +1,181 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <!-- Insert Publishing Houses -->
+    <changeSet id="insert-publishing-houses" author="arabkhan">
+        <insert tableName="publishing_houses">
+            <column name="id" value="1"/>
+            <column name="created_at" valueDate="2024-06-13T00:00:00"/>
+            <column name="updated_at" valueDate="2024-06-13T00:00:00"/>
+            <column name="status" valueBoolean="true"/>
+            <column name="name" value="Penguin Books"/>
+            <column name="address" value="123 Main Street"/>
+            <column name="city" value="New York"/>
+            <column name="country" value="USA"/>
+            <column name="contact_number" value="+1-234-567-890"/>
+            <column name="email" value="info@penguinbooks.com"/>
+            <column name="website" value="https://www.penguin.com"/>
+            <column name="foundation_year" value="1935"/>
+        </insert>
+    </changeSet>
+
+    <!-- Insert Authors -->
+    <changeSet id="insert-authors" author="arabkhan">
+        <insert tableName="authors">
+            <column name="id" value="1"/>
+            <column name="created_at" valueDate="2024-06-13T00:00:00"/>
+            <column name="updated_at" valueDate="2024-06-13T00:00:00"/>
+            <column name="status" valueBoolean="true"/>
+            <column name="first_name" value="F. Scott"/>
+            <column name="last_name" value="Fitzgerald"/>
+            <column name="birth_date" valueDate="1896-09-24"/>
+            <column name="nationality" value="American"/>
+            <column name="biography" value="Francis Scott Key Fitzgerald was an American novelist, essayist, and short-story writer."/>
+            <column name="website" value="https://en.wikipedia.org/wiki/F._Scott_Fitzgerald"/>
+        </insert>
+    </changeSet>
+
+    <!-- Insert Categories -->
+    <changeSet id="insert-categories" author="arabkhan">
+        <insert tableName="categories">
+            <column name="id" value="1"/>
+            <column name="created_at" valueDate="2024-06-13T00:00:00"/>
+            <column name="updated_at" valueDate="2024-06-13T00:00:00"/>
+            <column name="status" valueBoolean="true"/>
+            <column name="name" value="Fiction"/>
+            <column name="description" value="Literature that is made up."/>
+        </insert>
+    </changeSet>
+
+    <!-- Insert Books -->
+    <changeSet id="insert-books" author="arabkhan">
+        <insert tableName="books">
+            <column name="id" value="1"/>
+            <column name="created_at" valueDate="2024-06-13T00:00:00"/>
+            <column name="updated_at" valueDate="2024-06-13T00:00:00"/>
+            <column name="status" valueBoolean="true"/>
+            <column name="title" value="The Great Gatsby"/>
+            <column name="subtitle" value=""/>
+            <column name="isbn" value="9780141182636"/>
+            <column name="publication_year" value="1925"/>
+            <column name="edition" value="First Edition"/>
+            <column name="pages" value="180"/>
+            <column name="language" value="English"/>
+            <column name="copies" value="10"/>
+            <column name="available_copies" value="5"/>
+            <column name="shelf_location" value="Fiction"/>
+            <column name="publishing_house_id" value="1"/>
+        </insert>
+        <insert tableName="books">
+            <column name="id" value="2"/>
+            <column name="created_at" valueDate="2024-06-13T00:00:00"/>
+            <column name="updated_at" valueDate="2024-06-13T00:00:00"/>
+            <column name="status" valueBoolean="true"/>
+            <column name="title" value="To Kill a Mockingbird"/>
+            <column name="subtitle" value=""/>
+            <column name="isbn" value="9780061120084"/>
+            <column name="publication_year" value="1960"/>
+            <column name="edition" value="First Edition"/>
+            <column name="pages" value="281"/>
+            <column name="language" value="English"/>
+            <column name="copies" value="5"/>
+            <column name="available_copies" value="5"/>
+            <column name="shelf_location" value="Fiction"/>
+            <column name="publishing_house_id" value="1"/>
+        </insert>
+    </changeSet>
+
+    <!-- Insert Members -->
+    <changeSet id="insert-members" author="arabkhan">
+        <insert tableName="members">
+            <column name="id" value="1"/>
+            <column name="created_at" valueDate="2024-06-13T00:00:00"/>
+            <column name="updated_at" valueDate="2024-06-13T00:00:00"/>
+            <column name="status" valueBoolean="true"/>
+            <column name="first_name" value="Alice"/>
+            <column name="last_name" value="Johnson"/>
+            <column name="email" value="alice.johnson@example.com"/>
+            <column name="phone_number" value="+1-234-567-890"/>
+            <column name="address" value="789 Oak Street"/>
+            <column name="join_date" valueDate="2023-01-15"/>
+            <column name="membership_type" value="REGULAR"/>
+            <column name="is_active" valueBoolean="true"/>
+        </insert>
+        <insert tableName="members">
+            <column name="id" value="2"/>
+            <column name="created_at" valueDate="2024-06-13T00:00:00"/>
+            <column name="updated_at" valueDate="2024-06-13T00:00:00"/>
+            <column name="status" valueBoolean="true"/>
+            <column name="first_name" value="Bob"/>
+            <column name="last_name" value="Smith"/>
+            <column name="email" value="bob.smith@example.com"/>
+            <column name="phone_number" value="+1-345-678-901"/>
+            <column name="address" value="456 Pine Street"/>
+            <column name="join_date" valueDate="2022-03-20"/>
+            <column name="membership_type" value="PREMIUM"/>
+            <column name="is_active" valueBoolean="true"/>
+        </insert>
+    </changeSet>
+
+    <!-- Insert Borrowing Records -->
+    <changeSet id="insert-borrowing-records" author="arabkhan">
+        <insert tableName="borrowing_records">
+            <column name="id" value="1"/>
+            <column name="created_at" valueDate="2024-06-13T00:00:00"/>
+            <column name="updated_at" valueDate="2024-06-13T00:00:00"/>
+            <column name="status" valueBoolean="true"/>
+            <column name="borrow_date" valueDate="2024-06-01"/>
+            <column name="due_date" valueDate="2024-06-15"/>
+            <column name="return_date" valueDate="2024-06-10"/>
+            <column name="is_returned" valueBoolean="true"/>
+            <column name="book_id" value="1"/>
+            <column name="member_id" value="1"/>
+        </insert>
+        <insert tableName="borrowing_records">
+            <column name="id" value="2"/>
+            <column name="created_at" valueDate="2024-06-13T00:00:00"/>
+            <column name="updated_at" valueDate="2024-06-13T00:00:00"/>
+            <column name="status" valueBoolean="true"/>
+            <column name="borrow_date" valueDate="2024-05-20"/>
+            <column name="due_date" valueDate="2024-06-10"/>
+            <column name="is_returned" valueBoolean="false"/>
+            <column name="book_id" value="2"/>
+            <column name="member_id" value="2"/>
+        </insert>
+    </changeSet>
+
+    <!-- Insert Late Return Charges -->
+    <changeSet id="insert-late-return-charges" author="arabkhan">
+        <insert tableName="late_return_charges">
+            <column name="id" value="1"/>
+            <column name="created_at" valueDate="2024-06-13T00:00:00"/>
+            <column name="updated_at" valueDate="2024-06-13T00:00:00"/>
+            <column name="status" valueBoolean="true"/>
+            <column name="amount" value="10.00"/>
+            <column name="due_date" valueDate="2024-06-20"/>
+            <column name="payment_date" valueDate="2024-06-13"/>
+            <column name="is_paid" valueBoolean="true"/>
+            <column name="borrowing_record_id" value="1"/>
+        </insert>
+    </changeSet>
+
+    <!-- Insert Book Authors -->
+    <changeSet id="insert-book-authors" author="arabkhan">
+        <insert tableName="book_authors">
+            <column name="book_id" value="1"/>
+            <column name="author_id" value="1"/>
+        </insert>
+    </changeSet>
+
+    <!-- Insert Book Categories -->
+    <changeSet id="insert-book-categories" author="arabkhan">
+        <insert tableName="book_categories">
+            <column name="book_id" value="1"/>
+            <column name="category_id" value="1"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

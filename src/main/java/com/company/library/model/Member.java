@@ -20,10 +20,6 @@ import java.util.List;
 @NoArgsConstructor
 public class Member extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
@@ -52,5 +48,4 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BorrowingRecord> borrowingRecords;
-
 }

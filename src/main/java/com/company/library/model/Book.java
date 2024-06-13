@@ -19,35 +19,31 @@ import java.util.Set;
 @NoArgsConstructor
 public class Book extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
 
     @Column(name = "subtitle")
     private String subtitle;
 
-    @Column(name = "isbn")
+    @Column(name = "isbn", nullable = false, unique = true)
     private String isbn;
 
-    @Column(name = "publication_year")
+    @Column(name = "publication_year", nullable = false)
     private Integer publicationYear;
 
     @Column(name = "edition")
     private String edition;
 
-    @Column(name = "pages")
+    @Column(name = "pages", nullable = false)
     private Integer pages;
 
     @Column(name = "language")
     private String language;
 
-    @Column(name = "copies")
+    @Column(name = "copies", nullable = false)
     private Integer copies;
 
-    @Column(name = "available_copies")
+    @Column(name = "available_copies", nullable = false)
     private Integer availableCopies;
 
     @Column(name = "shelf_location")
@@ -75,6 +71,4 @@ public class Book extends BaseEntity {
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<BorrowingRecord> borrowingRecords;
-
-
 }
