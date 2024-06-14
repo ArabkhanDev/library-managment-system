@@ -29,12 +29,8 @@
             <column name="is_returned" type="BIT">
                 <constraints nullable="false"/>
             </column>
-            <column name="book_id" type="BIGINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="member_id" type="BIGINT">
-                <constraints nullable="false"/>
-            </column>
+            <column name="book_id" type="BIGINT"/>
+            <column name="member_id" type="BIGINT"/>
         </createTable>
 
         <addForeignKeyConstraint baseTableName="borrowing_records"

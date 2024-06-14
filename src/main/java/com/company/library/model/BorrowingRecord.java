@@ -2,12 +2,10 @@ package com.company.library.model;
 
 import com.company.library.model.base.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,6 +14,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BorrowingRecord extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "borrow_date", nullable = false)
     private LocalDate borrowDate;
@@ -30,11 +32,14 @@ public class BorrowingRecord extends BaseEntity {
     private boolean isReturned;
 
     @ManyToOne
-    @JoinColumn(name = "book_id", nullable = false)
+    @JoinColumn(name = "book_id")
     private Book book;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "member_id")
     private Member member;
+
+    @OneToOne(mappedBy = "borrowingRecord", orphanRemoval = true)
+    private LateReturnCharge lateReturnCharges;
 
 }

@@ -35,7 +35,7 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
         connection:
           providerDisablesAutocommit: false
-    showSql: false
+    showSql: true
     generateDdl: false
     openInView: false
     hibernate:

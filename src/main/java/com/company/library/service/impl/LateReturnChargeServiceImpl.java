@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,29 +24,35 @@ public class LateReturnChargeServiceImpl implements LateReturnChargeService {
     private final LateReturnChargeRepository lateReturnChargeRepository;
     private final BorrowingRecordRepository borrowingRecordRepository;
 
+    @Override
     public Page<LateReturnChargeDTO> getAllLateReturnCharges(Pageable pageable) {
         Page<LateReturnCharge> lateReturnCharges = lateReturnChargeRepository.findAll(pageable);
         return lateReturnCharges.map(LateReturnChargeMapper.INSTANCE::toDTO);
     }
 
+    @Override
     public LateReturnChargeDTO getLateReturnChargeById(Long id) {
         return lateReturnChargeRepository.findById(id)
                 .map(LateReturnChargeMapper.INSTANCE::toDTO)
                 .orElseThrow(() -> new ResourceNotFoundException("Late return charge not found with id: " + id));
     }
 
+    @Override
     public List<LateReturnChargeDTO> getLateReturnChargesByBorrowingRecordId(Long borrowingRecordId) {
         return lateReturnChargeRepository.findByBorrowingRecordId(borrowingRecordId).stream()
                 .map(LateReturnChargeMapper.INSTANCE::toDTO)
                 .collect(Collectors.toList());
     }
 
+    @Override
     public List<LateReturnChargeDTO> getLateReturnChargesByPaymentStatus(boolean isPaid) {
         return lateReturnChargeRepository.findByIsPaid(isPaid).stream()
                 .map(LateReturnChargeMapper.INSTANCE::toDTO)
                 .collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional
     public LateReturnChargeDTO createLateReturnCharge(LateReturnChargeDTO lateReturnChargeDTO) {
         BorrowingRecord borrowingRecord = borrowingRecordRepository.findById(lateReturnChargeDTO.getBorrowingRecordId())
                 .orElseThrow(() -> new ResourceNotFoundException("Borrowing record not found with id: " + lateReturnChargeDTO.getBorrowingRecordId()));
@@ -56,6 +64,7 @@ public class LateReturnChargeServiceImpl implements LateReturnChargeService {
         return LateReturnChargeMapper.INSTANCE.toDTO(savedCharge);
     }
 
+    @Override
     public LateReturnChargeDTO updateLateReturnCharge(Long id, LateReturnChargeDTO lateReturnChargeDTO) {
         LateReturnCharge existingCharge = lateReturnChargeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Late return charge not found with id: " + id));
@@ -73,6 +82,7 @@ public class LateReturnChargeServiceImpl implements LateReturnChargeService {
         return LateReturnChargeMapper.INSTANCE.toDTO(updatedCharge);
     }
 
+    @Override
     public void deleteLateReturnCharge(Long id) {
         LateReturnCharge lateReturnCharge = lateReturnChargeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Late return charge not found with id: " + id));

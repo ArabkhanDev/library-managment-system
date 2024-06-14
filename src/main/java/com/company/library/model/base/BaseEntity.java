@@ -10,9 +10,6 @@ import java.util.Date;
 @Data
 @MappedSuperclass
 public class BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @CreationTimestamp
     private Date createdAt;

@@ -1,6 +1,7 @@
 package com.company.library.service.impl;
 
 import com.company.library.dto.common.AuthorDTO;
+import com.company.library.exception.types.ResourceInUseException;
 import com.company.library.exception.types.ResourceNotFoundException;
 import com.company.library.mapper.AuthorMapper;
 import com.company.library.model.Author;
@@ -54,9 +55,10 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void deleteAuthor(Long id) throws ResourceNotFoundException {
+    public void deleteAuthor(Long id) {
         Author author = authorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Author not found with id: " + id));
+
         authorRepository.delete(author);
     }
 }

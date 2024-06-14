@@ -6,18 +6,14 @@ import com.company.library.dto.common.BookDTO;
 import com.company.library.exception.types.ResourceNotFoundException;
 import com.company.library.mapper.BookMapper;
 import com.company.library.model.Book;
-import com.company.library.model.BorrowingRecord;
-import com.company.library.repository.AuthorRepository;
-import com.company.library.repository.BookRepository;
-import com.company.library.repository.CategoryRepository;
-import com.company.library.repository.PublishingHouseRepository;
+import com.company.library.repository.*;
 import com.company.library.service.inter.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,14 +24,18 @@ public class BookServiceImpl implements BookService {
     private final AuthorRepository authorRepository;
     private final PublishingHouseRepository publishingHouseRepository;
     private final CategoryRepository categoryRepository;
+    private final BorrowingRecordRepository borrowingRecordRepository;
+    private final LateReturnChargeRepository lateReturnChargeRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public Page<BookDTO> getAllBooks(Pageable pageable) {
         Page<Book> books = bookRepository.findAll(pageable);
         return books.map(BookMapper.INSTANCE::toDTO);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public BookDTO getBookById(Long id) {
         return bookRepository.findById(id)
                 .map(BookMapper.INSTANCE::toDTO)
@@ -49,6 +49,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public BookDTO createBook(BookDTO bookDTO) {
         Book book = new Book();
         updateBookFromDTO(book, bookDTO);
@@ -66,21 +67,24 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public void deleteBook(Long id) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Book not found with id: " + id));
 
-        book.getAuthors().clear();
+        book.getBorrowingRecords().forEach(record -> record.setBook(null));
+        book.getBorrowingRecords().clear();
+
         book.getCategories().clear();
 
-        List<BorrowingRecord> borrowingRecords = book.getBorrowingRecords();
+        book.getAuthors().forEach(author -> author.getBooks().remove(book));
+        book.getAuthors().clear();
 
-        borrowingRecords.forEach(record -> record.setBook(null));
-
-        bookRepository.save(book);
+        book.setPublishingHouse(null);
 
         bookRepository.delete(book);
     }
+
 
     // Helper methods
     private void updateBookFromDTO(Book book, BookDTO bookDTO) {

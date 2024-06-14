@@ -2,10 +2,7 @@ package com.company.library.model;
 
 import com.company.library.model.base.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
@@ -18,6 +15,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LateReturnCharge extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "amount", nullable = false)
     private BigDecimal amount;
@@ -34,7 +35,7 @@ public class LateReturnCharge extends BaseEntity {
     private boolean isPaid;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "borrowing_record_id", nullable = false, unique = true)
+    @JoinColumn(name = "borrowing_record_id", unique = true)
     private BorrowingRecord borrowingRecord;
 
 }

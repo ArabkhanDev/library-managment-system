@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,23 +27,27 @@ public class PublishingHouseServiceImpl implements PublishingHouseService {
     private final PublishingHouseRepository publishingHouseRepository;
     private final BookRepository bookRepository;
 
+    @Override
     public Page<PublishingHouseDTO> getAllPublishingHouses(Pageable pageable) {
         Page<PublishingHouse> publishingHouses = publishingHouseRepository.findAll(pageable);
         return publishingHouses.map(PublishingHouseMapper.INSTANCE::toDTO);
     }
 
+    @Override
     public PublishingHouseDTO getPublishingHouseById(Long id) {
         return publishingHouseRepository.findById(id)
                 .map(PublishingHouseMapper.INSTANCE::toDTO)
                 .orElseThrow(() -> new ResourceNotFoundException("PublishingHouse not found with id: " + id));
     }
 
+    @Override
     public List<PublishingHouseDTO> getPublishingHousesByCountry(String country) {
         return publishingHouseRepository.findByCountry(country).stream()
                 .map(PublishingHouseMapper.INSTANCE::toDTO)
                 .collect(Collectors.toList());
     }
 
+    @Override
     public PublishingHouseDTO createPublishingHouse(PublishingHouseDTO publishingHouseDTO) {
         if (publishingHouseRepository.findByName(publishingHouseDTO.getName()) != null) {
             log.info("PublishingHouse already exists with name: {}", publishingHouseDTO.getName());
@@ -52,6 +58,7 @@ public class PublishingHouseServiceImpl implements PublishingHouseService {
         return PublishingHouseMapper.INSTANCE.toDTO(savedPublishingHouse);
     }
 
+    @Override
     public PublishingHouseDTO updatePublishingHouse(Long id, PublishingHouseDTO publishingHouseDTO) {
         PublishingHouse existingPublishingHouse = publishingHouseRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("PublishingHouse not found with id: " + id));
@@ -74,6 +81,8 @@ public class PublishingHouseServiceImpl implements PublishingHouseService {
         return PublishingHouseMapper.INSTANCE.toDTO(updatedPublishingHouse);
     }
 
+    @Override
+    @Transactional
     public void deletePublishingHouse(Long id) {
         PublishingHouse publishingHouse = publishingHouseRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("PublishingHouse not found with id: " + id));
