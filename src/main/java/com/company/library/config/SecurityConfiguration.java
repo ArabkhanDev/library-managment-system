@@ -20,6 +20,8 @@ public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
+    private final CustomAccessDeniedHandler authenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,11 +38,14 @@ public class SecurityConfiguration {
                                 "/api/v1/late-return-charges/**", "/api/v1/members/**",
                                 "/api/v1/publishing-houses/**")
                         .authenticated()
-                        .anyRequest().hasRole("ADMIN")
+                        .anyRequest().permitAll()
+                )
+                .exceptionHandling((exceptions) -> exceptions
+                        .accessDeniedHandler(accessDeniedHandler) // Handle 403 Forbidden errors
+                        .authenticationEntryPoint(authenticationEntryPoint) // Handle 401 Unauthorized errors
                 );
         http.authenticationProvider(authenticationProvider);
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
 }
